@@ -1,0 +1,132 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with role (PARENT, TEACHER, ECD_MANAGER, SUPER_ADMIN) and entitlements",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string" },
+        "displayName": { "type": "string" },
+        "currentPlan": { "type": "string" },
+        "preferredLanguage": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "ChildProfile": {
+      "title": "ChildProfile",
+      "description": "Child profile for early learning progression",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "parentId": { "type": "string" },
+        "nickname": { "type": "string" },
+        "age": { "type": "number" },
+        "preferredLanguage": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "parentId", "nickname", "age"]
+    },
+    "Centre": {
+      "title": "Centre",
+      "description": "ECD Creche or Early Learning Centre",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "area": { "type": "string" },
+        "city": { "type": "string" },
+        "status": { "type": "string" },
+        "plan": { "type": "string" }
+      },
+      "required": ["id", "name", "area"]
+    },
+    "ECDProspect": {
+      "title": "ECDProspect",
+      "description": "Discovered candidate ECD centre for outreach and activation pipeline",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "placeId": { "type": "string" },
+        "centreName": { "type": "string" },
+        "area": { "type": "string" },
+        "city": { "type": "string" },
+        "status": { "type": "string" },
+        "verificationStatus": { "type": "string" },
+        "activationTokenId": { "type": "string" }
+      },
+      "required": ["id", "centreName", "status"]
+    },
+    "ActivationToken": {
+      "title": "ActivationToken",
+      "description": "Single-use secure workspace activation invitation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "token": { "type": "string" },
+        "prospectId": { "type": "string" },
+        "centreName": { "type": "string" },
+        "status": { "type": "string" },
+        "expiresAt": { "type": "string" }
+      },
+      "required": ["id", "token", "status"]
+    },
+    "ChildProgressSync": {
+      "title": "ChildProgressSync",
+      "description": "Offline-to-cloud synchronized progress payload for children (streaks, badges, packs)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "childId": { "type": "string" },
+        "parentId": { "type": "string" },
+        "lastSyncedAt": { "type": "string" },
+        "syncSource": { "type": "string" }
+      },
+      "required": ["id", "childId", "lastSyncedAt"]
+    },
+    "CentreProgressSync": {
+      "title": "CentreProgressSync",
+      "description": "Synchronized attendance and classroom progression for ECD centres",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "centreId": { "type": "string" },
+        "syncedAt": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "centreId", "syncedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile documents"
+    },
+    "/children/{childId}": {
+      "schema": "ChildProfile",
+      "description": "Child profile documents"
+    },
+    "/centres/{centreId}": {
+      "schema": "Centre",
+      "description": "ECD centre documents"
+    },
+    "/prospects/{prospectId}": {
+      "schema": "ECDProspect",
+      "description": "ECD candidate discovery records"
+    },
+    "/activations/{activationId}": {
+      "schema": "ActivationToken",
+      "description": "Centre activation invitations"
+    },
+    "/child_progress/{recordId}": {
+      "schema": "ChildProgressSync",
+      "description": "Synchronized child learning progress, badges, and streaks"
+    },
+    "/centre_sync_logs/{logId}": {
+      "schema": "CentreProgressSync",
+      "description": "Synchronized ECD centre attendance and activity logs"
+    }
+  }
+}

@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "Outfit", system-ui, -apple-system, sans-serif;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+}
+
+.font-editorial {
+  font-family: 'Fraunces', serif;
+}
+
+/* ==========================================================================
+   PRINT-FRIENDLY CSS OPTIMIZATION
+   Tailored for South African Early Childhood Development (ECD) learning materials,
+   A4 / Letter standard desktop & black-and-white ink-saver printer layouts.
+   ========================================================================== */
+
+@page {
+  size: A4 portrait;
+  margin: 10mm 12mm 10mm 12mm;
+}
+
+@media print {
+  /* Global print resets */
+  *,
+  *::before,
+  *::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html,
+  body {
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Universal element suppressions for print */
+  header,
+  nav,
+  footer,
+  aside,
+  button,
+  input,
+  select,
+  textarea,
+  .no-print,
+  .pwa-install-banner,
+  .fixed,
+  .sticky,
+  [role="dialog"],
+  [role="alert"] {
+    display: none !important;
+  }
+
+  /* Show dedicated print-only elements */
+  .print-only {
+    display: block !important;
+  }
+
+  /* Ensure root container doesn't create unwanted flex or overflow constraints */
+  #root,
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    display: block !important;
+    background: #ffffff !important;
+  }
+
+  /* Printable Sheet / Pack Container Formatting */
+  .printable-sheet,
+  .printable-pack,
+  .print-area {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    border: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    overflow: visible !important;
+  }
+
+  /* Inner worksheet page frame */
+  .worksheet-frame {
+    border: 1.5pt solid #000000 !important;
+    border-radius: 4pt !important;
+    padding: 8mm !important;
+    margin-bottom: 8mm !important;
+    background: #ffffff !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Page break controls */
+  .page-break,
+  .page-break-after {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  .page-break-before {
+    page-break-before: always !important;
+    break-before: page !important;
+  }
+
+  .avoid-break,
+  .printable-item,
+  .worksheet-box,
+  .activity-card {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* High contrast typography & borders */
+  h1, h2, h3, h4, h5, h6, p, span, strong, div {
+    color: #000000 !important;
+  }
+
+  /* Clean student header on top of worksheets */
+  .print-student-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+    border-bottom: 1.5pt solid #000000 !important;
+    padding-bottom: 4mm !important;
+    margin-bottom: 6mm !important;
+  }
+
+  .print-underline {
+    border-bottom: 1pt solid #000000 !important;
+    display: inline-block !important;
+    min-width: 120px !important;
+    height: 14pt !important;
+  }
+
+  /* Tracing & handwriting stroke guides */
+  .trace-dotted-box {
+    border: 1.5pt dashed #444444 !important;
+    border-radius: 4pt !important;
+    background: #ffffff !important;
+    color: #222222 !important;
+  }
+
+  .trace-dotted-letter {
+    font-family: 'Fraunces', Georgia, serif !important;
+    letter-spacing: 2pt !important;
+    color: #555555 !important;
+    -webkit-text-stroke: 0.5pt #222222 !important;
+  }
+
+  /* Scissor cut line for physical classroom activities */
+  .print-cut-line {
+    border-top: 1pt dashed #666666 !important;
+    margin: 6mm 0 !important;
+    position: relative !important;
+  }
+
+  .print-cut-line::before {
+    content: "✂ Cut along line" !important;
+    font-size: 8pt !important;
+    font-weight: bold !important;
+    color: #444444 !important;
+    position: absolute !important;
+    top: -8pt !important;
+    left: 8mm !important;
+    background: #ffffff !important;
+    padding: 0 4pt !important;
+  }
+
+  /* Teacher & Parent Notes section at sheet footer */
+  .print-notes-box {
+    border: 1pt solid #999999 !important;
+    background: #fafafa !important;
+    padding: 3mm 4mm !important;
+    margin-top: 4mm !important;
+    font-size: 9pt !important;
+    border-radius: 3pt !important;
+  }
+
+  /* Ink-saving grid adjustments */
+  .grid {
+    gap: 4mm !important;
+  }
+
+  /* Suppress links URL expansions */
+  a[href]::after {
+    content: none !important;
+  }
+}

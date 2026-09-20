@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isSuperAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == 'naha.thabiso@gmail.com' ||
+        request.auth.token.role == 'SUPER_ADMIN'
+      );
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId) || isSuperAdmin();
+    }
+
+    // Children profiles
+    match /children/{childId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // Centres and Classrooms
+    match /centres/{centreId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
+    }
+
+    // Prospects (Admin and discovery)
+    match /prospects/{prospectId} {
+      allow read, write: if isSuperAdmin() || isAuthenticated();
+    }
+
+    // Activation tokens
+    match /activations/{activationId} {
+      allow read: if true; // Publicly verifiable with token
+      allow write: if isSuperAdmin() || isAuthenticated();
+    }
+
+    // Offline Background Sync: Child learning progression and streaks
+    match /child_progress/{recordId} {
+      allow read, write: if true;
+    }
+
+    // Offline Background Sync: ECD Centre attendance and synchronization logs
+    match /centre_sync_logs/{logId} {
+      allow read, write: if true;
+    }
+
+    // General activities, worksheets, and progress
+    match /{document=**} {
+      allow read, write: if isAuthenticated() || isSuperAdmin();
+    }
+  }
+}

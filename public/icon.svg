@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FAF7F2"/>
+      <stop offset="100%" stop-color="#F4EDE2"/>
+    </linearGradient>
+    <linearGradient id="terracottaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E07A5F"/>
+      <stop offset="100%" stop-color="#C85A3F"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#48CAE4"/>
+      <stop offset="100%" stop-color="#2A9D8F"/>
+    </linearGradient>
+    <linearGradient id="seedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F4A261"/>
+      <stop offset="100%" stop-color="#E76F51"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded squircle -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+  <rect x="16" y="16" width="480" height="480" rx="96" fill="none" stroke="#EADFCF" stroke-width="4"/>
+
+  <!-- Rising Sun Motif -->
+  <circle cx="256" cy="270" r="140" fill="#F4A261" opacity="0.15"/>
+  <circle cx="256" cy="270" r="105" fill="#E07A5F" opacity="0.12"/>
+
+  <!-- Soil Arc / Ground -->
+  <path d="M120 370 C 180 340, 332 340, 392 370 C 340 405, 172 405, 120 370 Z" fill="#14213D" opacity="0.9"/>
+
+  <!-- Imbewu (The Golden Seed) -->
+  <ellipse cx="256" cy="350" rx="36" ry="48" transform="rotate(-15 256 350)" fill="url(#seedGrad)"/>
+  <path d="M256 302 C 270 325, 275 355, 260 380 C 248 375, 246 340, 256 302 Z" fill="#F4A261" opacity="0.7"/>
+
+  <!-- Growing Green Sprout Leaves -->
+  <!-- Left Leaf -->
+  <path d="M252 310 C 230 260, 160 250, 150 200 C 200 190, 240 230, 252 300 Z" fill="#2A9D8F"/>
+  <path d="M252 300 C 225 255, 185 240, 175 210 C 210 208, 240 240, 252 300 Z" fill="#48CAE4" opacity="0.3"/>
+
+  <!-- Right Leaf -->
+  <path d="M258 290 C 275 230, 350 215, 365 160 C 310 160, 270 210, 258 285 Z" fill="#264653"/>
+  <path d="M258 285 C 280 235, 330 220, 345 175 C 305 180, 275 220, 258 285 Z" fill="#2A9D8F" opacity="0.8"/>
+
+  <!-- Tiny Budding Heart / Seed Droplet -->
+  <circle cx="256" cy="180" r="14" fill="#E07A5F"/>
+
+  <!-- Wordmark "IMBEWU" in curved or base placement -->
+  <text x="256" y="445" font-family="'Fraunces', 'Georgia', serif" font-size="34" font-weight="bold" fill="#14213D" text-anchor="middle" letter-spacing="4">IMBEWU</text>
+  <text x="256" y="472" font-family="'Outfit', system-ui, sans-serif" font-size="14" font-weight="600" fill="#E07A5F" text-anchor="middle" letter-spacing="3">THE SEED</text>
+</svg>
