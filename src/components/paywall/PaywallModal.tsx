@@ -7,7 +7,7 @@ import { buildPayFastCheckoutUrl } from '../../services/payfast';
 interface PaywallModalProps {
   isOpen: boolean;
   onClose: () => void;
-  feature: 'pdf_download' | 'weekly_pack' | 'multi_child' | 'classroom_pack' | 'story_library';
+  feature: 'pdf_download' | 'weekly_pack' | 'multi_child' | 'classroom_pack' | 'story_library' | 'screen_free_printables';
   userEmail?: string;
   userName?: string;
   onSimulateUpgrade?: (plan: PlanTier) => void;
@@ -56,7 +56,7 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({
         {/* Header with Value Badge */}
         <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#E07A5F]/15 text-[#E07A5F] text-xs font-bold uppercase tracking-wider w-fit mb-3">
           <Lock className="w-3.5 h-3.5" />
-          <span>Imbewu Membership Feature</span>
+          <span>{offer.taglineBadge || 'Imbewu Membership Feature'}</span>
         </div>
 
         <h3 className="font-editorial text-2xl sm:text-3xl font-bold text-[#14213D] mb-2 leading-snug">
@@ -85,15 +85,20 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({
         {/* Pricing Summary */}
         <div className="flex items-center justify-between p-4 bg-[#F4EDE2] rounded-2xl border border-[#EADFCF] mb-6">
           <div>
-            <p className="text-xs text-[#6B7280] font-medium">Recommended Plan</p>
+            <p className="text-xs text-[#6B7280] font-medium">BanaPele Tier</p>
             <p className="font-editorial text-lg font-bold text-[#14213D]">
-              Imbewu {offer.recommendedPlan}
+              {offer.recommendedPlan === 'PARENT_PRO' ? '2. Parent Pro' : offer.recommendedPlan === 'CRECHE_CHAMPION' ? '4. Creche Champion' : 'Parent Pro'}
             </p>
           </div>
           <div className="text-right">
             <p className="text-lg font-bold text-[#E07A5F]">{offer.priceFormatted}</p>
-            <p className="text-[10px] text-[#6B7280]">PayFast Secure · Cancel anytime</p>
+            <p className="text-[10px] text-[#2A9D8F] font-bold">or R12 / week micro-billing</p>
           </div>
+        </div>
+
+        {/* Local Payment Options Note */}
+        <div className="p-3 bg-white rounded-xl border border-[#EADFCF] text-[11px] text-[#4B5563] mb-5 flex items-center justify-between">
+          <span>🇿🇦 Pay with: <strong>Capitec Pay</strong>, <strong>Flash / 1Voucher PIN</strong>, or <strong>MTN / Vodacom airtime</strong>.</span>
         </div>
 
         {/* Actions */}
@@ -103,11 +108,11 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({
             className="w-full py-4 rounded-full bg-[#E07A5F] hover:bg-[#D46A4F] text-white font-bold text-sm shadow-sm flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5"
           >
             <CreditCard className="w-4 h-4" />
-            <span>Unlock Now via PayFast ({offer.priceFormatted})</span>
+            <span>Unlock Now ({offer.priceFormatted})</span>
           </button>
 
           <p className="text-[11px] text-center text-[#6B7280]">
-            🔒 256-bit encrypted South African payments via PayFast (NahaLabs PTY Ltd).
+            🔒 Encrypted South African payments via Capitec Pay, PayFast & Flash Spaza Vouchers.
           </p>
         </div>
 

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Sparkles, Calendar, Printer, Users, Plus, Check, Clock, School, ArrowRight, ExternalLink, Download, FileText } from 'lucide-react';
+import { Sparkles, Calendar, Printer, Users, Plus, Check, Clock, School, ArrowRight, ExternalLink, Download, FileText, MessageCircle, Headphones, Moon } from 'lucide-react';
 import type { Classroom, Learner, WeeklyLearningPack, LanguageCode, PlanTier } from '../../types';
 import { EntitlementService } from '../../services/entitlementEngine';
+import { TeacherWhatsAppShareModal } from './TeacherWhatsAppShareModal';
+import { AudioBookStudio } from '../audiobook/AudioBookStudio';
 
 interface TeacherDashboardProps {
   language: LanguageCode;
   userPlan: PlanTier;
-  onOpenPaywall: (feature: 'weekly_pack' | 'classroom_pack' | 'pdf_download') => void;
+  onOpenPaywall: (feature: any) => void;
 }
 
 export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
@@ -14,7 +16,8 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
   userPlan,
   onOpenPaywall
 }) => {
-  const [activeTab, setActiveTab] = useState<'build_week' | 'classes' | 'worksheets' | 'calendar'>('build_week');
+  const [activeTab, setActiveTab] = useState<'build_week' | 'classes' | 'worksheets' | 'calendar' | 'audiobook'>('build_week');
+  const [isWhatsAppShareModalOpen, setIsWhatsAppShareModalOpen] = useState(false);
   
   // Weekly pack generation state
   const [theme, setTheme] = useState('South African Transport & Community');
@@ -133,6 +136,23 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
             >
               📅 Google Calendar
             </button>
+            <button
+              onClick={() => setActiveTab('audiobook')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                activeTab === 'audiobook' ? 'bg-[#14213D] text-amber-300 shadow-xs' : 'bg-[#FAF7F2] text-[#4B5563]'
+              }`}
+            >
+              <Headphones className="w-3.5 h-3.5 text-amber-400" />
+              <span>🎧 Classroom Audio Studio</span>
+              <span className="text-[9px] bg-amber-400 text-black px-1.5 py-0.2 rounded-full font-extrabold">PRO</span>
+            </button>
+            <button
+              onClick={() => setIsWhatsAppShareModalOpen(true)}
+              className="px-4 py-2 rounded-xl text-xs font-bold bg-[#25D366] hover:bg-[#20ba59] text-white shadow-xs inline-flex items-center gap-1.5 transition-all"
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+              <span>Share Kit to Parents</span>
+            </button>
           </div>
         </div>
 
@@ -230,6 +250,13 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
                   </div>
 
                   <div className="no-print flex items-center gap-2">
+                    <button
+                      onClick={() => setIsWhatsAppShareModalOpen(true)}
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs shadow-xs"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5" />
+                      <span>Share via WhatsApp</span>
+                    </button>
                     <button
                       onClick={() => setActiveTab('calendar')}
                       className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#E07A5F] hover:bg-[#D46A4F] text-white font-bold text-xs shadow-xs"
@@ -364,12 +391,22 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
                         <td className="p-3">{l.skillsActiveCount} skills</td>
                         <td className="p-3">{l.observationsCount} logged</td>
                         <td className="p-3">
-                          <button
-                            onClick={() => alert(`Observing ${l.nickname}: Showing steady letter recognition progress.`)}
-                            className="text-[#2A9D8F] font-bold hover:underline"
-                          >
-                            + Record Observation
-                          </button>
+                          <div className="flex items-center gap-3">
+                            <button
+                              onClick={() => alert(`Observing ${l.nickname}: Showing steady letter recognition progress.`)}
+                              className="text-[#2A9D8F] font-bold hover:underline"
+                            >
+                              + Record Observation
+                            </button>
+                            <button
+                              onClick={() => setIsWhatsAppShareModalOpen(true)}
+                              className="inline-flex items-center gap-1 text-[#25D366] font-bold hover:underline"
+                              title={`Share printable kit for ${l.nickname}`}
+                            >
+                              <MessageCircle className="w-3.5 h-3.5" />
+                              <span>Send Kit</span>
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -442,6 +479,38 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
 
           </div>
         )}
+
+        {/* TAB 4: CRECHE CLASSROOM AUDIO STUDIO */}
+        {activeTab === 'audiobook' && (
+          <AudioBookStudio
+            role="teacher"
+            child={{
+              id: learners[0]?.id || 'lrn-demo',
+              parentId: 'usr-parent-1',
+              nickname: learners[0]?.nickname || 'Sipho',
+              age: learners[0]?.age || 4,
+              preferredLanguage: language,
+              interests: ['Stories', 'Singing'],
+              learningAreas: ['Listening', 'Vocabulary'],
+              learningMode: 'both',
+              neighborhood: 'Orlando West, Soweto',
+              createdAt: new Date().toISOString()
+            }}
+            userPlan={userPlan}
+            onOpenPaywall={onOpenPaywall}
+            onUpgradePlan={onOpenPaywall}
+          />
+        )}
+
+        {/* WhatsApp Sharing Modal for Teachers */}
+        <TeacherWhatsAppShareModal
+          isOpen={isWhatsAppShareModalOpen}
+          onClose={() => setIsWhatsAppShareModalOpen(false)}
+          classes={classes}
+          learners={learners}
+          theme={theme}
+          ageGroup={ageGroup}
+        />
 
       </div>
     </div>

@@ -338,51 +338,50 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           
           <div className="text-center max-w-2xl mx-auto mb-16">
             <span className="text-xs font-bold uppercase tracking-wider text-[#E07A5F]">
-              Transparent Pricing
+              BanaPele AI Transparent Pricing
             </span>
             <h2 className="font-editorial text-3xl sm:text-4xl font-bold text-[#14213D] mt-2 mb-3">
-              Accessible pricing for South African families and creches
+              Priced for Soweto Households & Community Creches
             </h2>
-            <p className="text-sm text-[#6B7280]">
-              Powered by secure South African payment with PayFast. Cancel anytime.
+            <p className="text-sm text-[#4B5563] max-w-2xl mx-auto">
+              Real education without competing with grocery essentials. Cheaper than Showmax Mobile (R45), with weekly R12 micro-billing and spaza shop cash vouchers.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* 4-Tier Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             
-            {/* Tier 1: Free */}
-            <div className="bg-white rounded-3xl p-8 border border-[#EADFCF] shadow-xs flex flex-col justify-between">
+            {/* Tier 1: Ubuntu Free */}
+            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#EADFCF] shadow-xs flex flex-col justify-between">
               <div>
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="font-editorial text-xl font-bold text-[#14213D]">Free</h3>
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-gray-100 text-gray-700">
-                    Discover
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="font-editorial text-lg font-bold text-[#14213D]">1. Ubuntu Free</h3>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">
+                    Forever R0
                   </span>
                 </div>
-                <div className="text-3xl font-bold text-[#14213D] mb-4">
+                <div className="text-3xl font-extrabold text-[#14213D] mb-1">
                   R0 <span className="text-xs text-[#6B7280] font-normal">/ forever</span>
                 </div>
-                <p className="text-xs text-[#6B7280] mb-6">
-                  Experience Imbewu and understand the value before upgrading.
+                <p className="text-[11px] text-[#6B7280] mb-4">
+                  Organic viral hook & WhatsApp sharing. Always free for every South African child.
                 </p>
-                <ul className="space-y-3 text-xs text-[#4B5563] mb-8">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span>1 Child profile & onboarding</span>
+                <ul className="space-y-2 text-xs text-[#4B5563] mb-6">
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>Daily Encouragement 5-minute activity card with audio</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span>Daily interactive activity preview</span>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>2 personalized digital stories per month</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span>Public mini-demo access</span>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>1 low-res watermarked printable sample</span>
                   </li>
-                  <li className="flex items-center gap-2 text-gray-400">
-                    <span>✕ No PDF downloads / printing</span>
-                  </li>
-                  <li className="flex items-center gap-2 text-gray-400">
-                    <span>✕ No weekly packs</span>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>Fish Audio studio trial with 30s Golden Teaser</span>
                   </li>
                 </ul>
               </div>
@@ -390,105 +389,177 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 onClick={onStartParent}
                 className="w-full py-3 rounded-full border-2 border-[#14213D] text-[#14213D] font-bold text-xs hover:bg-[#14213D] hover:text-white transition-all"
               >
-                Create Free Account
+                Start Free Forever
               </button>
             </div>
 
-            {/* Tier 2: Family (Most Popular) */}
-            <div className="bg-white rounded-3xl p-8 border-2 border-[#E07A5F] shadow-lg relative flex flex-col justify-between">
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#E07A5F] text-white text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full shadow-xs">
-                Most Popular for Families
+            {/* Tier 2: Parent Pro */}
+            <div className="bg-white rounded-3xl p-6 sm:p-7 border-2 border-[#E07A5F] shadow-lg relative flex flex-col justify-between">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#E07A5F] text-white text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full shadow-xs whitespace-nowrap">
+                Zero-Guilt Price
               </div>
               <div>
-                <div className="flex justify-between items-center mb-4 pt-1">
-                  <h3 className="font-editorial text-xl font-bold text-[#14213D]">Family</h3>
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#E07A5F]/15 text-[#E07A5F]">
-                    Full Access
+                <div className="flex justify-between items-center mb-3 pt-1">
+                  <h3 className="font-editorial text-lg font-bold text-[#14213D]">2. Parent Pro</h3>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#E07A5F]/15 text-[#E07A5F]">
+                    Kasi Hero Pass
                   </span>
                 </div>
-                <div className="text-3xl font-bold text-[#14213D] mb-4">
-                  R79 <span className="text-xs text-[#6B7280] font-normal">/ month</span>
+                <div className="text-3xl font-extrabold text-[#14213D] mb-0.5">
+                  R39 <span className="text-xs text-[#6B7280] font-normal">/ month</span>
                 </div>
-                <p className="text-xs text-[#6B7280] mb-6">
-                  Complete early learning nourishment for up to 5 children.
+                <p className="text-[11px] font-bold text-[#2A9D8F] mb-3">
+                  or R12 / week micro-billing (R349/yr)
                 </p>
-                <ul className="space-y-3 text-xs text-[#4B5563] mb-8">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span>Up to 5 children profiles</span>
+                <p className="text-[11px] text-[#6B7280] mb-4">
+                  Working parents, shift workers, and Gogos. Cost of a loaf of bread and cold drink.
+                </p>
+                <ul className="space-y-2 text-xs text-[#4B5563] mb-6">
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span><strong>Unlimited Bedtime Audiobooks</strong> in Mommy's cloned voice</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span><strong>Printable A4 PDF downloads</strong> (35/mo)</span>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>2 Voice Clones (Mother + Gogo/Father)</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span>Personalised weekly learning packs</span>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>Bedtime Dark Mode (anti-blue light)</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span>Complete English + isiZulu story library</span>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span><strong>Direct-to-WhatsApp Voice Notes</strong> for night shifts (Bara nurses)</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span>Saved resource library & skill insights</span>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>Clean ink-saver A4 printables without watermark</span>
                   </li>
                 </ul>
               </div>
               <button
-                onClick={() => onSelectPlan('FAMILY')}
+                onClick={() => onSelectPlan('PARENT_PRO')}
                 className="w-full py-3.5 rounded-full bg-[#E07A5F] hover:bg-[#D46A4F] text-white font-bold text-xs shadow-sm transition-all"
               >
-                Upgrade to Family (R79/mo)
+                Join Parent Pro (R39/mo)
               </button>
             </div>
 
-            {/* Tier 3: ECD Centre */}
-            <div className="bg-white rounded-3xl p-8 border border-[#EADFCF] shadow-xs flex flex-col justify-between">
+            {/* Tier 3: Creche Starter */}
+            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#EADFCF] shadow-xs flex flex-col justify-between">
               <div>
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="font-editorial text-xl font-bold text-[#14213D]">ECD Centre</h3>
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#2A9D8F]/15 text-[#2A9D8F]">
-                    Teachers & Creches
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="font-editorial text-lg font-bold text-[#14213D]">3. Creche Starter</h3>
+                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                    &lt; R6 / child
                   </span>
                 </div>
-                <div className="text-3xl font-bold text-[#14213D] mb-4">
-                  R399 <span className="text-xs text-[#6B7280] font-normal">/ month</span>
+                <div className="text-3xl font-extrabold text-[#14213D] mb-1">
+                  R149 <span className="text-xs text-[#6B7280] font-normal">/ month</span>
                 </div>
-                <p className="text-xs text-[#6B7280] mb-6">
-                  For creches, preschools, and ECD centres managing classes.
+                <p className="text-[11px] text-[#6B7280] mb-4">
+                  For home-based creches & playgroups (up to 25 kids). Less than half of one child's fee.
                 </p>
-                <ul className="space-y-3 text-xs text-[#4B5563] mb-8">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span>Up to 5 classes & 50 learners</span>
+                <ul className="space-y-2 text-xs text-[#4B5563] mb-6">
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>Up to 25 learners capacity</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span><strong>Build My Week</strong> lesson planner</span>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>1 Teacher Voice Clone (resting-time stories)</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span>Google Calendar schedule sync</span>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>Unlimited classroom printable mats</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span>Classroom printable packs (150 PDFs/mo)</span>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>Replaces generic exercise books (saves R150+/kid)</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-[#2A9D8F]" />
-                    <span>Learner observation log & reports</span>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>Basic NCF/ELDA milestone tracking</span>
                   </li>
                 </ul>
               </div>
               <button
-                onClick={() => onSelectPlan('ECD')}
-                className="w-full py-3.5 rounded-full bg-[#2A9D8F] hover:bg-[#238276] text-white font-bold text-xs shadow-sm transition-all"
+                onClick={() => onSelectPlan('CRECHE_STARTER')}
+                className="w-full py-3 rounded-full bg-[#14213D] hover:bg-black text-white font-bold text-xs transition-all"
               >
-                Upgrade to ECD (R399/mo)
+                Get Creche Starter (R149)
               </button>
             </div>
 
+            {/* Tier 4: Creche Champion */}
+            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-[#2A9D8F] shadow-md flex flex-col justify-between relative">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#2A9D8F] text-white text-[10px] uppercase font-bold tracking-wider px-3 py-1 rounded-full shadow-xs whitespace-nowrap">
+                DBE Subsidy Protection
+              </div>
+              <div>
+                <div className="flex justify-between items-center mb-3 pt-1">
+                  <h3 className="font-editorial text-lg font-bold text-[#14213D]">4. Creche Champion</h3>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#2A9D8F]/15 text-[#2A9D8F]">
+                    Up to 60 Kids
+                  </span>
+                </div>
+                <div className="text-3xl font-extrabold text-[#14213D] mb-1">
+                  R289 <span className="text-xs text-[#6B7280] font-normal">/ month</span>
+                </div>
+                <p className="text-[11px] text-[#6B7280] mb-4">
+                  For formal Soweto community centres. Protects the R24/day/child government subsidy.
+                </p>
+                <ul className="space-y-2 text-xs text-[#4B5563] mb-6">
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>Up to 60 learners capacity</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span><strong>Auto-Generated DBE Portfolio of Evidence (PoE)</strong> with stamp</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>3 Teacher Voice Clones (Baby, Toddler, Grade R)</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>Weekly WhatsApp Parent Broadcaster</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5" />
+                    <span>Bulk ink-saving print queues</span>
+                  </li>
+                </ul>
+              </div>
+              <button
+                onClick={() => onSelectPlan('CRECHE_CHAMPION')}
+                className="w-full py-3.5 rounded-full bg-[#2A9D8F] hover:bg-[#238276] text-white font-bold text-xs shadow-sm transition-all"
+              >
+                Get Creche Champion (R289)
+              </button>
+            </div>
+
+          </div>
+
+          {/* Localized Payment Rails Callout */}
+          <div className="mt-10 p-5 rounded-3xl bg-[#FAF7F2] border border-[#EADFCF] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">🇿🇦</span>
+              <div>
+                <p className="font-bold text-[#14213D]">
+                  No Credit Card Required: Township Local Payment Rails Supported
+                </p>
+                <p className="text-[#6B7280]">
+                  Pay via <strong>Capitec Pay & Instant EFT</strong>, buy a voucher at any <strong>spaza shop (Flash, 1Voucher, Kazang)</strong>, or charge <strong>R12/week</strong> directly to your MTN / Vodacom airtime.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="bg-white border border-[#EADFCF] px-2.5 py-1 rounded-lg font-bold text-[11px]">Capitec Pay</span>
+              <span className="bg-white border border-[#EADFCF] px-2.5 py-1 rounded-lg font-bold text-[11px]">Flash Spaza</span>
+              <span className="bg-white border border-[#EADFCF] px-2.5 py-1 rounded-lg font-bold text-[11px]">1Voucher</span>
+            </div>
           </div>
 
         </div>

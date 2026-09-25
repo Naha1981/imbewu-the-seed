@@ -25,15 +25,31 @@ export default function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authInitialRole, setAuthInitialRole] = useState<'PARENT' | 'TEACHER'>('PARENT');
   const [isSuperAdminAuthOpen, setIsSuperAdminAuthOpen] = useState(false);
-  const [paywallFeature, setPaywallFeature] = useState<'pdf_download' | 'weekly_pack' | 'multi_child' | 'classroom_pack' | 'story_library' | null>(null);
+  const [paywallFeature, setPaywallFeature] = useState<'pdf_download' | 'weekly_pack' | 'multi_child' | 'classroom_pack' | 'story_library' | 'screen_free_printables' | null>(null);
+
+  // Deep linking state for WhatsApp printable activity kits
+  const [deepLinkPrintableChild, setDeepLinkPrintableChild] = useState<string | undefined>(undefined);
+  const [deepLinkKitType, setDeepLinkKitType] = useState<any>(undefined);
 
   // Activation token from URL (e.g. /activate/tok-soweto-8821 or #activate-tok-soweto-8821)
   const [activationToken, setActivationToken] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check path for /activate/:token or /admin
+    // Check path for /activate/:token or /admin or printable deep link
     const path = window.location.pathname;
     const hash = window.location.hash;
+    const search = window.location.search;
+
+    if (hash.includes('printable') || path.startsWith('/printable') || search.includes('kit=') || hash.includes('kit=') || search.includes('mode=printable')) {
+      const queryString = search || (hash.includes('?') ? hash.substring(hash.indexOf('?')) : '');
+      const params = new URLSearchParams(queryString);
+      const childParam = params.get('child');
+      const kitParam = params.get('kit');
+      if (childParam) setDeepLinkPrintableChild(decodeURIComponent(childParam));
+      if (kitParam) setDeepLinkKitType(kitParam);
+      setCurrentView('parent');
+      return;
+    }
 
     if (path.startsWith('/activate/')) {
       const tok = path.replace('/activate/', '').trim();
@@ -136,6 +152,9 @@ export default function App() {
             language={language}
             userPlan={currentUser?.currentPlan || 'FREE'}
             onOpenPaywall={(feat) => setPaywallFeature(feat)}
+            initialTab={deepLinkPrintableChild || deepLinkKitType ? 'worksheet' : undefined}
+            initialChildName={deepLinkPrintableChild}
+            initialKitType={deepLinkKitType}
           />
         )}
 

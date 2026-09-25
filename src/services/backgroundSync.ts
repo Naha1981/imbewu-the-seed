@@ -6,7 +6,7 @@ import {
   getDocFromServer 
 } from '../config/firebase';
 import { OfflineStorageService } from './offlineStorage';
-import type { WeeklyPackProgress, DailyStreakData, MilestoneBadge } from '../types';
+import type { WeeklyPackProgress, DailyStreakData, MilestoneBadge, WeeklyLearningPack } from '../types';
 
 export enum OperationType {
   CREATE = 'create',
@@ -221,8 +221,8 @@ class BackgroundSyncService {
     
     // Collect pack progress
     const packProgresses: Record<string, WeeklyPackProgress> = {};
-    const packs = OfflineStorageService.getAvailablePacks();
-    packs.forEach(p => {
+    const packs = OfflineStorageService.getCachedWeeklyPacks();
+    packs.forEach((p: WeeklyLearningPack) => {
       const prog = OfflineStorageService.getWeeklyProgress(p.id, childId);
       if (prog) {
         packProgresses[p.id] = prog;

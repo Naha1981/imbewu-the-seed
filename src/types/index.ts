@@ -1,6 +1,34 @@
 export type UserRole = 'PARENT' | 'TEACHER' | 'ECD_MANAGER' | 'SUPER_ADMIN';
 
-export type PlanTier = 'FREE' | 'FAMILY' | 'ECD' | 'CENTRE' | 'ENTERPRISE';
+export type PlanTier = 
+  | 'FREE' 
+  | 'PARENT_PRO' 
+  | 'CRECHE_STARTER' 
+  | 'CRECHE_CHAMPION' 
+  | 'FAMILY' 
+  | 'ECD' 
+  | 'CENTRE' 
+  | 'ENTERPRISE';
+
+export type LocalizedPaymentMethod = 
+  | 'capitec_pay' 
+  | 'instant_eft' 
+  | 'cash_voucher' 
+  | 'airtime_carrier';
+
+export interface BanaPeleTierDetails {
+  id: PlanTier;
+  name: string;
+  priceZAR: number;
+  billingPeriod: string;
+  weeklyMicroBillingZAR?: number;
+  annualBillingZAR?: number;
+  targetAudience: string;
+  tagline: string;
+  badge?: string;
+  economicJustification: string;
+  inclusions: string[];
+}
 
 export type LanguageCode = 'en' | 'zu' | 'nso' | 'st' | 'tn' | 'xh';
 
@@ -26,6 +54,10 @@ export interface ChildProfile {
   interests: string[];
   learningAreas: string[];
   learningMode: 'digital' | 'printable' | 'both';
+  neighborhood?: string;
+  hairStyle?: string;
+  favoriteToy?: string;
+  favoriteSnack?: string;
   createdAt: string;
 }
 
@@ -345,6 +377,45 @@ export interface DailyLearningPrompt {
   difficulty: 'Easy' | 'Engaging' | 'Playful';
 }
 
+// --- Daily Encouragement Card (Time-of-day 5-minute NCF/ELDA activity) ---
+export type TimeOfDayPeriod = 'morning' | 'afternoon' | 'evening' | 'night';
+
+export type ELDACode = 
+  | 'ELDA 1: Well-Being'
+  | 'ELDA 2: Identity & Belonging'
+  | 'ELDA 3: Communicating'
+  | 'ELDA 4: Exploring Mathematics'
+  | 'ELDA 5: Creativity'
+  | 'ELDA 6: Knowledge & Understanding of the World';
+
+export interface DailyEncouragementActivity {
+  id: string;
+  timeOfDay: TimeOfDayPeriod;
+  titleEn: string;
+  titleZu: string;
+  titleSt?: string;
+  taglineEn: string;
+  taglineZu: string;
+  eldaCode: ELDACode;
+  eldaSummary: string;
+  icon: string;
+  durationMinutes: number;
+  accentColor: string;
+  timeBadge: string;
+  householdItems: string[];
+  stepsEn: string[];
+  stepsZu: string[];
+  whyItMattersEn: string;
+  whyItMattersZu: string;
+  culturalTouchpoint: string;
+  encouragementQuote: string;
+  encouragementQuoteAuthor: string;
+  ageAdaptation: {
+    forAge3: string;
+    forAge5: string;
+  };
+}
+
 // --- Developmental Milestone Chart (D3 Visualization) ---
 export type DevelopmentalDomain = 'language' | 'motor' | 'numeracy';
 
@@ -400,5 +471,63 @@ export interface StoryResourceItem {
   parentReadingTipEn: string;
   parentReadingTipZu: string;
   printableSheetsCount: number;
+}
+
+// --- Premium Voice Cloning & Personalized Audio Book Engine (Fish Audio s2.1-pro) ---
+export type VoiceCalibrationLanguage = 'zu' | 'st' | 'en';
+
+export interface VoiceCalibrationScript {
+  id: string;
+  language: VoiceCalibrationLanguage;
+  languageLabel: string;
+  title: string;
+  text: string;
+  culturalContext: string;
+}
+
+export interface VoiceProfile {
+  id: string;
+  voiceModelId: string;
+  speakerName: string;
+  role: 'parent' | 'teacher';
+  language: VoiceCalibrationLanguage;
+  createdAt: string;
+  sampleAudioUrl?: string;
+  qualityScore?: number;
+}
+
+export interface AudioBookWordTimestamp {
+  word: string;
+  start: number; // in seconds
+  end: number;   // in seconds
+}
+
+export interface AudioBookChapter {
+  chapterNumber: number;
+  title: string;
+  durationSeconds: number;
+  storyText: string;
+  ssmlWithTags: string; // Expressive inline tags: [warm], [whispering], [excited], [cheerful], [pause]
+  audioUrl?: string;
+  timestamps: AudioBookWordTimestamp[];
+}
+
+export interface AudioBook {
+  id: string;
+  templateId: string;
+  title: string;
+  theme: string;
+  childName: string;
+  suburb: string;
+  favoriteSnack: string;
+  friendOrPet: string;
+  voiceProfileId: string;
+  voiceProfileName: string;
+  voiceRole: 'parent' | 'teacher';
+  chapters: AudioBookChapter[];
+  totalDurationSeconds: number;
+  coverArtTheme: string;
+  createdAt: string;
+  isCachedOffline: boolean;
 }
 

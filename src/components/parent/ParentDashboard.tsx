@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Heart, Printer, CheckCircle2, ArrowRight, Play, RotateCcw, Volume2, Star, BookOpen, Layers, Award, Calendar, Scissors, Share2, Flame } from 'lucide-react';
+import { Sparkles, Heart, Printer, CheckCircle2, ArrowRight, Play, RotateCcw, Volume2, Star, BookOpen, Layers, Award, Calendar, Scissors, Share2, Flame, FileText, Headphones, Moon } from 'lucide-react';
 import { CURRICULUM_SKILLS, SA_VOCABULARY, getRecommendedNextAction, INITIAL_DEMO_WORKSHEET } from '../../services/learningGraph';
 import { EntitlementService } from '../../services/entitlementEngine';
 import { WeeklyProgressTracker } from './WeeklyProgressTracker';
@@ -9,32 +9,47 @@ import { ShareProgressModal } from './ShareProgressModal';
 import { MilestoneBadgeShowcase } from './MilestoneBadgeShowcase';
 import { BadgeCelebrationModal } from './BadgeCelebrationModal';
 import { DailyLearningPromptWidget } from './DailyLearningPromptWidget';
+import { DailyEncouragementCard } from './DailyEncouragementCard';
 import { DevelopmentalMilestoneChart } from './DevelopmentalMilestoneChart';
 import { StoryResourceLibrary } from './StoryResourceLibrary';
+import { ScreenFreePrintableGenerator } from './ScreenFreePrintableGenerator';
+import { PrintableGenerator } from '../printable/PrintableGenerator';
+import { AudioBookStudio } from '../audiobook/AudioBookStudio';
 import { OfflineStorageService, SEED_WEEKLY_PACKS } from '../../services/offlineStorage';
 import type { ChildProfile, SkillProgress, LanguageCode, WorksheetData, PlanTier, WeeklyLearningPack, MilestoneBadge } from '../../types';
+import type { PrintableKitType } from '../../services/whatsappSharingService';
 
 interface ParentDashboardProps {
   language: LanguageCode;
   userPlan: PlanTier;
-  onOpenPaywall: (feature: 'pdf_download' | 'weekly_pack' | 'multi_child') => void;
+  onOpenPaywall: (feature: any) => void;
+  initialTab?: 'today' | 'library' | 'badges' | 'calendar' | 'activity' | 'worksheet' | 'progress' | 'audiobook';
+  initialKitType?: PrintableKitType;
+  initialChildName?: string;
 }
 
 export const ParentDashboard: React.FC<ParentDashboardProps> = ({
   language,
   userPlan,
-  onOpenPaywall
+  onOpenPaywall,
+  initialTab,
+  initialKitType,
+  initialChildName
 }) => {
-  // Demo child profile for Lerato (age 4)
+  // Demo child profile for Thabo (age 4) - authentic South African township profile
   const [child, setChild] = useState<ChildProfile>({
     id: 'child-1',
     parentId: 'usr-parent-1',
-    nickname: 'Lerato',
+    nickname: initialChildName || 'Thabo',
     age: 4,
     preferredLanguage: language,
     interests: ['Drawing', 'Soccer', 'Singing'],
     learningAreas: ['Letters', 'Numbers', 'Sounds'],
     learningMode: 'both',
+    neighborhood: 'Meadowlands, Zone 2',
+    hairStyle: 'Short Fade with Part',
+    favoriteToy: 'Wire Car (Igalimoto)',
+    favoriteSnack: 'Magwinya with Polony',
     createdAt: '2026-09-10'
   });
 
@@ -68,7 +83,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
     }
   ]);
 
-  const [activeTab, setActiveTab] = useState<'today' | 'library' | 'badges' | 'calendar' | 'activity' | 'worksheet' | 'progress'>('today');
+  const [activeTab, setActiveTab] = useState<'today' | 'library' | 'badges' | 'calendar' | 'activity' | 'worksheet' | 'progress' | 'audiobook'>(initialTab || 'today');
+  const [worksheetSubView, setWorksheetSubView] = useState<'studio' | 'a4kit' | 'curriculum'>('studio');
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [streakKey, setStreakKey] = useState(0);
   const [badgeKey, setBadgeKey] = useState(0);
@@ -173,6 +189,29 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                   ? 'Ukufunda kwansuku zonke kukhulisa amakhono omntwana wakho.'
                   : 'Nourishing letter recognition, sounds, and pencil control.'}
               </p>
+              {/* Authentic Township Representation Badges */}
+              <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
+                {child.neighborhood && (
+                  <span className="text-[10px] font-semibold bg-[#FAF7F2] text-[#4B5563] px-2 py-0.5 rounded-md border border-[#EADFCF]">
+                    📍 {child.neighborhood}
+                  </span>
+                )}
+                {child.hairStyle && (
+                  <span className="text-[10px] font-semibold bg-[#FAF7F2] text-[#4B5563] px-2 py-0.5 rounded-md border border-[#EADFCF]">
+                    ✂️ {child.hairStyle}
+                  </span>
+                )}
+                {child.favoriteToy && (
+                  <span className="text-[10px] font-semibold bg-[#FAF7F2] text-[#4B5563] px-2 py-0.5 rounded-md border border-[#EADFCF]">
+                    🚗 {child.favoriteToy}
+                  </span>
+                )}
+                {child.favoriteSnack && (
+                  <span className="text-[10px] font-semibold bg-[#FAF7F2] text-[#4B5563] px-2 py-0.5 rounded-md border border-[#EADFCF]">
+                    🍩 {child.favoriteSnack}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
 
@@ -232,7 +271,7 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
                 activeTab === 'worksheet' ? 'bg-[#457B9D] text-white' : 'bg-[#FAF7F2] text-[#4B5563]'
               }`}
             >
-              📄 Worksheet
+              📄 Screen-Free Printables
             </button>
             <button
               onClick={() => setActiveTab('progress')}
@@ -242,12 +281,40 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             >
               📊 Progress
             </button>
+            <button
+              onClick={() => setActiveTab('audiobook')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                activeTab === 'audiobook' ? 'bg-[#14213D] text-amber-300 shadow-xs' : 'bg-[#FAF7F2] text-[#4B5563]'
+              }`}
+            >
+              <Headphones className="w-3.5 h-3.5 text-amber-400" />
+              <span>🎧 Bedtime Audio Studio</span>
+              <span className="text-[9px] bg-amber-400 text-black px-1.5 py-0.2 rounded-full font-extrabold">NEW</span>
+            </button>
           </div>
         </div>
 
         {/* TAB 1: TODAY'S OVERVIEW & WEEKLY PROGRESS TRACKER */}
         {activeTab === 'today' && (
           <div className="space-y-8">
+            {/* Daily Encouragement Card - Time-of-Day 5-Minute Activity (BanaPele AI) */}
+            <DailyEncouragementCard
+              child={child}
+              language={language}
+              onActivityCompleted={() => {
+                setStreakKey(k => k + 1);
+                const { newlyUnlocked } = OfflineStorageService.evaluateAndUnlockBadges(child.id, {
+                  completedActivityCount: 1,
+                  bilingualPracticed: true
+                });
+                if (newlyUnlocked && newlyUnlocked.length > 0) {
+                  setCelebratingBadge(newlyUnlocked[0]);
+                  setIsCelebrationModalOpen(true);
+                }
+                setBadgeKey(k => k + 1);
+              }}
+            />
+
             {/* Daily Learning Streak Tracker - Habit Formation */}
             <DailyStreakTracker
               key={`streak-today-${streakKey}`}
@@ -256,6 +323,37 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
               onStartActivity={() => setActiveTab('activity')}
               onStreakUpdated={() => setStreakKey(k => k + 1)}
             />
+
+            {/* Bedtime Audio Book Studio Promotional Card */}
+            <div className="bg-gradient-to-r from-[#14213D] to-[#2B3A67] rounded-3xl p-6 text-white border border-amber-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+                  <Headphones className="w-6 h-6" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-amber-300 bg-amber-500/20 px-2.5 py-0.5 rounded-full border border-amber-500/30">
+                      Fish Audio Voice Cloning
+                    </span>
+                    <span className="text-[10px] text-gray-300">Mommy's Voice</span>
+                  </div>
+                  <h3 className="font-editorial text-xl font-bold text-white mt-1">
+                    Bedtime Audio Book Studio - Cloned by Mom / Teacher
+                  </h3>
+                  <p className="text-xs text-gray-300">
+                    Listen to {child.nickname} as the hero in personalized 3-chapter Soweto bedtime stories.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setActiveTab('audiobook')}
+                className="w-full sm:w-auto px-6 py-3 rounded-full bg-amber-400 hover:bg-amber-300 text-[#14213D] font-bold text-xs shadow-md flex items-center justify-center gap-2 shrink-0 transition-all"
+              >
+                <Moon className="w-4 h-4" />
+                <span>Open Audio Studio →</span>
+              </button>
+            </div>
 
             {/* Daily Learning Prompt Widget - 5-Minute Household Activity */}
             <DailyLearningPromptWidget
@@ -517,13 +615,91 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
         {/* TAB 3: PRINTABLE WORKSHEET PREVIEW & PRINT ENGINE */}
         {activeTab === 'worksheet' && (
           <div className="space-y-6 max-w-4xl mx-auto">
-            {/* Interactive Pack & Day Switcher (Screen only, hidden when printed) */}
-            <div className="no-print bg-white rounded-3xl p-6 border border-[#EADFCF] shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div className="space-y-1">
-                <span className="text-[10px] uppercase font-bold text-[#E07A5F] tracking-wider">
-                  Weekly Printable Pack Browser · Standard A4 Layout
-                </span>
-                <h3 className="font-editorial text-xl font-bold text-[#14213D]">
+            
+            {/* Sub-view Switcher (Screen-Free Studio vs Weekly Curriculum Packs) */}
+            <div className="no-print flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white rounded-2xl p-2.5 border border-[#EADFCF] shadow-xs">
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => setWorksheetSubView('studio')}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    worksheetSubView === 'studio'
+                      ? 'bg-[#14213D] text-white shadow-xs'
+                      : 'text-[#4B5563] hover:bg-[#FAF7F2]'
+                  }`}
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#E07A5F]" />
+                  <span>Screen-Free Activity Studio</span>
+                </button>
+                <button
+                  onClick={() => setWorksheetSubView('a4kit')}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    worksheetSubView === 'a4kit'
+                      ? 'bg-[#14213D] text-white shadow-xs'
+                      : 'text-[#4B5563] hover:bg-[#FAF7F2]'
+                  }`}
+                >
+                  <Scissors className="w-3.5 h-3.5 text-[#E07A5F]" />
+                  <span>A4 3-in-1 Kit (Color, Trace & Cut)</span>
+                </button>
+                <button
+                  onClick={() => setWorksheetSubView('curriculum')}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    worksheetSubView === 'curriculum'
+                      ? 'bg-[#14213D] text-white shadow-xs'
+                      : 'text-[#4B5563] hover:bg-[#FAF7F2]'
+                  }`}
+                >
+                  <FileText className="w-3.5 h-3.5 text-[#2A9D8F]" />
+                  <span>5-Day Curriculum Sheets</span>
+                </button>
+              </div>
+
+              <span className="text-[11px] text-[#6B7280] px-2 font-medium">
+                Pure Ink-Saver Black & White Vector Art (NCF / CAPS Aligned)
+              </span>
+            </div>
+
+            {/* SUB-VIEW 1: SCREEN-FREE PRINTABLE STUDIO (COLORING, TRACING, SHAPE PUZZLE, WATERMARK GATE) */}
+            {worksheetSubView === 'studio' && (
+              <ScreenFreePrintableGenerator
+                child={child}
+                language={language}
+                userPlan={userPlan}
+                onOpenPaywall={onOpenPaywall}
+                initialKitType={initialKitType}
+              />
+            )}
+
+            {/* SUB-VIEW 2: A4 3-IN-1 ACTIVITY KIT (COLORING, DOTTED TRACING MAT, CUT-OUT PUZZLE) */}
+            {worksheetSubView === 'a4kit' && (
+              <PrintableGenerator
+                name={child.nickname}
+                age={child.age}
+                interest={child.interests?.[0] || 'Taxis & Township Transport'}
+                child={child}
+                language={language}
+                userPlan={userPlan}
+                onPrint={() => {
+                  const canDownload = EntitlementService.canDownloadPDF(userPlan);
+                  if (!canDownload) {
+                    onOpenPaywall('pdf_download');
+                  } else {
+                    window.print();
+                  }
+                }}
+              />
+            )}
+
+            {/* SUB-VIEW 2: 5-DAY CURRICULUM SHEETS */}
+            {worksheetSubView === 'curriculum' && (
+              <div className="space-y-6">
+                {/* Interactive Pack & Day Switcher (Screen only, hidden when printed) */}
+                <div className="no-print bg-white rounded-3xl p-6 border border-[#EADFCF] shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-[#E07A5F] tracking-wider">
+                      Weekly Printable Pack Browser · Standard A4 Layout
+                    </span>
+                    <h3 className="font-editorial text-xl font-bold text-[#14213D]">
                   {activePack.title}
                 </h3>
                 <p className="text-xs text-[#6B7280]">
@@ -710,6 +886,8 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
             </div>
           </div>
         )}
+      </div>
+    )}
 
         {/* TAB 5: PROGRESS & PRACTICE SIGNALS */}
         {activeTab === 'progress' && (
@@ -826,6 +1004,17 @@ export const ParentDashboard: React.FC<ParentDashboardProps> = ({
 
             </div>
           </div>
+        )}
+
+        {/* TAB 6: BEDTIME AUDIO BOOK STUDIO */}
+        {activeTab === 'audiobook' && (
+          <AudioBookStudio
+            role="parent"
+            child={child}
+            userPlan={userPlan}
+            onOpenPaywall={onOpenPaywall}
+            onUpgradePlan={onOpenPaywall}
+          />
         )}
 
       </div>
