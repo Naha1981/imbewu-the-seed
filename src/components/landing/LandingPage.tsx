@@ -94,8 +94,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </div>
 
             {/* Right Column: Tactile Seed & Learning Card Showcase */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative mx-auto max-w-md bg-white rounded-3xl p-6 shadow-xl border border-[#EADFCF]">
+            <div className="lg:col-span-5 flex flex-col items-center justify-center">
+              <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-xl border border-[#EADFCF]">
                 
                 {/* Visual Header */}
                 <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#FAF7F2]">
@@ -144,10 +144,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
               </div>
 
-              {/* Floating accent badge */}
-              <div className="absolute -bottom-6 -left-6 bg-[#14213D] text-white p-4 rounded-2xl shadow-lg hidden sm:block max-w-[210px] border border-white/10">
-                <p className="text-xs font-bold text-[#F4A261] mb-1">“Learn → Practise → Play → Print → Track”</p>
-                <p className="text-[10px] text-gray-300">Nourishment for young growing minds.</p>
+              {/* Learning methodology badge - neatly placed below card with zero overlap */}
+              <div className="w-full max-w-md mt-3 bg-[#14213D] text-white p-3.5 px-4 rounded-2xl shadow-md border border-white/10 flex items-center justify-between gap-3">
+                <div className="space-y-0.5">
+                  <p className="text-xs font-bold text-[#F4A261]">“Learn → Practise → Play → Print → Track”</p>
+                  <p className="text-[10px] text-gray-300">Nourishment for young growing minds.</p>
+                </div>
+                <span className="shrink-0 w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center text-sm">
+                  🌱
+                </span>
               </div>
 
             </div>
